@@ -1,0 +1,37 @@
+{
+	"onlineRepositories": [
+		{
+			"name" : "phabricator",
+		 	"one_line": "<Your repository>/browse/master/{file}${line}",
+		 	"multi_line": "<Your repository>/browse/master/{file}${fromline}-{toline}"
+		},
+		{
+			"name" : "github",
+			"one_line": "https://github.com/akiriati/Bridge-Project/blob/master{file}#L{line}",
+			"multi_line": "https://github.com/akiriati/Bridge-Project/blob/master{file}/#L{fromline}-L{toline}",
+			"search": "https://github.com/akiriati/Bridge-Project/search?q={text}"
+		}
+	],
+
+	"commands": [
+		{
+			"name": "open-bridge-github",
+			"operation": "open",
+			"with": "onlineRepositories",
+			"repository": "github"
+		},
+		{
+			"name": "copy-bridge-github",
+			"operation": "copy",
+			"with": "onlineRepositories",
+			"repository": "github"
+		},
+		{
+			"name": "search-bridge-github",
+			"operation": "search",
+			"with": "onlineRepositories",
+			"repository": "github"
+		}
+
+	]
+}

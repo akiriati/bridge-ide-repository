@@ -1,0 +1,17 @@
+[
+{
+    "id" : "copytogithub",
+    "caption" : "Copy to Github",
+    "command" : "copy_bridge_github"
+},
+{
+    "id" : "openingithub",
+    "caption" : "Open in Github",
+    "command" : "open_bridge_github"
+},
+{
+    "id" : "searchingithub",
+    "caption" : "Search in Github",
+    "command" : "search_bridge_github"
+},
+]

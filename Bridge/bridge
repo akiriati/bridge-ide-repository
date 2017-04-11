@@ -1,0 +1,108 @@
+#!/usr/bin/python
+
+import sys, getopt
+import subprocess
+import webbrowser
+import re
+from urllib import quote
+import json
+import os
+
+def main(argv):
+    params = parse_params(argv)
+    with open(os.path.join(os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__))), 'configure.json')) as json_data:
+        configure = json.load(json_data)
+        print(configure)
+
+    command = next((command for command in configure["commands"] if command["name"] == params["command_name"]), None)
+    if not command:
+        print_help_string()
+
+    repository = next((repository for repository in configure["onlineRepositories"] if repository["name"] == command["repository"]), None)
+    if not repository:
+        print_help_string()
+
+    if command["operation"] == "open" or command["operation"] == "copy":
+        if params["fromline"]: 
+            url = repository["multi_line"].format(fromline=params["fromline"], toline=params["toline"], file=params["file"])
+        else:
+            url = repository["one_line"].format(line=params["line"], file=params["file"])
+    elif command["operation"] == "search":
+        text = params["text"]
+        if 'textmanipulation' in command.keys():
+            for manipulation in command["textmanipulation"]:
+                if manipulation == "reescape":
+                    text = re.escape(text)
+        text = quote(text)            
+        url = repository["search"].format(text=text)
+    else:
+        print_help_string()
+
+    
+    if command["operation"] == "copy":
+        write_to_clipboard(url)
+    elif command["operation"] == "open" or command["operation"] == "search" :
+        print(url)
+        webbrowser.open(url)        
+    else:
+        print_help_string()
+
+
+
+
+def write_to_clipboard(output):
+    process = subprocess.Popen(
+        'pbcopy', env={'LANG': 'en_US.UTF-8'}, stdin=subprocess.PIPE)
+    process.communicate(output.encode('utf-8'))
+
+
+def print_help_string():
+    print ("bridge.py [command-name] -f <filepath> -l <line> -a <multi-line first line> -z <multi-line last line> -t <selected text>")
+
+
+def parse_params(argv):
+    operation = ""
+    file = ""
+    line = ""
+    fromline = ""
+    toline = ""
+    platform = ""
+    url = ""
+    text= ""
+    try:
+        command_name = argv[0]
+        opts, args = getopt.getopt(argv[1:],"hf:l:a:z:t:")
+    except getopt.GetoptError:
+        print_help_string()
+    for opt, arg in opts:
+        if opt == '-h':
+            print_help_string()
+        elif opt == '-f':
+            file = arg
+        elif opt == '-l':
+            line = arg
+        elif opt == '-a':
+            fromline = arg
+        elif opt == '-z':
+            toline = arg
+        elif opt == '-t':
+            text = arg
+
+    print(text)
+    if fromline and toline and fromline == toline:
+        line = fromline
+        fromline = None
+        toline = None
+
+    return dict(
+        command_name=command_name,
+        file=file,
+        line=line,
+        fromline=fromline,
+        toline=toline,
+        text=text
+    )
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
+
