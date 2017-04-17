@@ -57,33 +57,6 @@ or just open it with an online repository. This document explains how we can do 
   - [Command line](https://github.com/akiriati/Bridge-Project/#call-from-command-line)
   
 
-## Features
-### Supported operations:
-- Copy online link
-- Open on browser
-- Search on browser
-### Connect to any online repository:
-- GitHub
-- Phabricator (Diffusion)
-- Add any of your choice
-### Invoke it any way you want:
-- menu bar
-- panel button
-- right-click context menu
-- keyboard shortcut
-### Connect to various IDEs*:
-- PyCharm
-- Sublimeth
-- Command Line
-
-*feel free to add more editors (plugin, configuration instructions, etc.)
-
-### Support multi-line selection
-- Create one-liner link to your cursor position.
-- Create multi-line link for selected text.
-
-Only works with OSX for now..
-
 ## Connect to PyCharm
 ### Setup:
 - [Install](https://github.com/akiriati/Bridge-Project/#install) Bridge
