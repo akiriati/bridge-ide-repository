@@ -43,7 +43,7 @@ or just open it with an online repository. This document explains how we can do 
         "name": a unique name for the repository,
         "one_line": link to the online repository when one line is selected 
                     (can include {file}, {line}),
-        "one_line": link to the online repository when multi line is selected 
+        "multi_line": link to the online repository when multi line is selected 
                     (can include {file}, {fromline}, {toline})
         "search": link to the online repository's search with the selected text
                    (can include {file}, {text})
